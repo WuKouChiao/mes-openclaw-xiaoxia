@@ -15,13 +15,24 @@ description: "MES 系统 API 参考：通用表查询、订单聚合接口，bas
 |------|------|------|
 | GET | /api/tables | 列出所有表 |
 | GET | /api/tables/{name}/columns | 查表结构 |
-| GET | /api/tables/{name}?page=1&size=50&filter={"col1":"val1"} | 分页查询数据，filter 为 JSON 格式 |
+| GET | /api/tables/{name}?page=1&size=50&filter={"col1":"val1"} | 分页查询，filter 支持等值过滤和范围操作符 `$gte`/`$gt`/`$lte`/`$lt` |
 
 ## 订单聚合接口
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
 | GET | /api/orders/{orderNo}?site=3100 | 一次返回订单主表+客户名+明细列表 |
+
+## 数采数据接口（电流/电压）
+
+⚠️ **dc_ 开头的表（dc_station_to_electricity、dc_station_to_voltage 等）是数据采集大表，不支持通用表查询，必须使用专用接口。**
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | /api/dc/electricity?startTime=&endTime=&station=&page=&size= | 查询电流数据，startTime/endTime 必填 |
+| GET | /api/dc/voltage?startTime=&endTime=&station=&page=&size= | 查询电压数据，startTime/endTime 必填 |
+
+参数：startTime/endTime 格式 `yyyy-MM-dd HH:mm:ss`，station 可选，page 默认 1，size 默认 50 最大 500。
 
 ## 使用场景
 
